@@ -12,7 +12,7 @@ public class PaintFrame extends JFrame
     {
         //frame
         setTitle("Paint Frame");
-        setSize(800,800 );
+        setSize(800, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -32,6 +32,9 @@ public class PaintFrame extends JFrame
         JButton pencil = new JButton("Pencil");
         JButton line = new JButton("|");
 
+        sub1.add(pencil);
+        sub1.add(line);
+
         // buttons panel 2
         JButton green = new JButton();
         green.setBackground(Color.GREEN);
@@ -43,9 +46,6 @@ public class PaintFrame extends JFrame
         magenta.setBackground(Color.MAGENTA);
         JButton black = new JButton();
         black.setBackground(Color.BLACK);
-
-        sub1.add(pencil);
-        sub2.add(line);
 
         sub2.add(green);
         sub2.add(blue);
@@ -72,6 +72,7 @@ public class PaintFrame extends JFrame
             {
                 canvas.drawFromMouse(event.getX(), event.getY());
                 canvas.setOldxy(event.getX(), event.getY());
+
             }
 
             @Override
@@ -84,19 +85,19 @@ public class PaintFrame extends JFrame
         canvas.addMouseListener(new MouseListener()
         {
             @Override
-            public void mouseClicked(MouseEvent e)
+            public void mouseClicked(MouseEvent event)
             {
 
             }
 
             @Override
-            public void mousePressed(MouseEvent e)
+            public void mousePressed(MouseEvent event)
             {
 
             }
 
             @Override
-            public void mouseReleased(MouseEvent e)
+            public void mouseReleased(MouseEvent event)
             {
 
             }
