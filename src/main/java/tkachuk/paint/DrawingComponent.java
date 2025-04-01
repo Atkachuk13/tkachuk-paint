@@ -57,15 +57,11 @@ public class DrawingComponent extends JComponent
         repaint();  // tells the operating system to recall the whole drawing component
     }
 
-    public void drawLine(int x, int y)
+    public void drawLine(int x1, int y1, int x2, int y2)
     {
         Graphics g = image.getGraphics();
         g.setColor(drawColor);
-        if (oldx != -1 && oldy != -1)
-        {
-            g.drawLine(oldx, oldy, x, y);
-        }
-        oldx = x;
-        oldy = y;
+        g.drawLine(x1, y1, x2, y2);
+        repaint();
     }
 }

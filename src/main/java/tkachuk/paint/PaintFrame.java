@@ -7,6 +7,8 @@ import java.awt.event.*;
 public class PaintFrame extends JFrame
 {
     private final DrawingComponent canvas = new DrawingComponent();
+    private boolean pencilPressed = false;
+    private boolean linePressed = false;
 
     public PaintFrame()
     {
@@ -59,6 +61,18 @@ public class PaintFrame extends JFrame
         add(canvas, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
 
+        pencil.addActionListener(e ->
+        {
+            pencilPressed = true;
+            linePressed = false;
+        });
+
+        line.addActionListener(e ->
+        {
+            pencilPressed = false;
+            linePressed = true;
+        });
+
         green.addActionListener(e -> canvas.setDrawColor(Color.GREEN));
         blue.addActionListener(e -> canvas.setDrawColor(Color.BLUE));
         red.addActionListener(e -> canvas.setDrawColor(Color.RED));
@@ -70,9 +84,10 @@ public class PaintFrame extends JFrame
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                canvas.drawFromMouse(event.getX(), event.getY());
-                canvas.setOldxy(event.getX(), event.getY());
-
+                if (pencilPressed)
+                {
+                    canvas.drawFromMouse(event.getX(), event.getY());
+                }
             }
 
             @Override
@@ -84,6 +99,9 @@ public class PaintFrame extends JFrame
 
         canvas.addMouseListener(new MouseListener()
         {
+            private int startX;
+            private int startY;
+
             @Override
             public void mouseClicked(MouseEvent event)
             {
@@ -93,13 +111,24 @@ public class PaintFrame extends JFrame
             @Override
             public void mousePressed(MouseEvent event)
             {
+                if (linePressed)
+                {
+                    startX = event.getX();
+                    startY = event.getY();
+                } else if (pencilPressed)
+                {
+                    canvas.setOldxy(event.getX(), event.getY());
+                }
 
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
-
+                if (linePressed)
+                {
+                    canvas.drawLine(startX, startY, event.getX(), event.getY());
+                }
             }
 
             @Override
