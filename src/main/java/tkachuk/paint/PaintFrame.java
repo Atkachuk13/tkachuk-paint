@@ -37,23 +37,10 @@ public class PaintFrame extends JFrame
         sub1.add(pencil);
         sub1.add(line);
 
-        // buttons panel 2
-        JButton green = new JButton();
-        green.setBackground(Color.GREEN);
-        JButton blue = new JButton();
-        blue.setBackground(Color.BLUE);
-        JButton red = new JButton();
-        red.setBackground(Color.RED);
-        JButton magenta = new JButton();
-        magenta.setBackground(Color.MAGENTA);
-        JButton black = new JButton();
-        black.setBackground(Color.BLACK);
+        // colors panel 2
+        JButton colorButton = new JButton("Colors");
 
-        sub2.add(green);
-        sub2.add(blue);
-        sub2.add(red);
-        sub2.add(magenta);
-        sub2.add(black);
+        sub2.add(colorButton);
 
         panel.add(sub1);
         panel.add(sub2);
@@ -73,11 +60,19 @@ public class PaintFrame extends JFrame
             linePressed = true;
         });
 
-        green.addActionListener(e -> canvas.setDrawColor(Color.GREEN));
-        blue.addActionListener(e -> canvas.setDrawColor(Color.BLUE));
-        red.addActionListener(e -> canvas.setDrawColor(Color.RED));
-        magenta.addActionListener(e -> canvas.setDrawColor(Color.MAGENTA));
-        black.addActionListener(e -> canvas.setDrawColor(Color.BLACK));
+        colorButton.addActionListener(e ->
+        {
+            Color newColor = JColorChooser.showDialog(
+                    PaintFrame.this,
+                    "Select color,",
+                    canvas.getDrawColor()
+            );
+
+            if (newColor != null)
+            {
+                canvas.setDrawColor(newColor);
+            }
+        });
 
         canvas.addMouseMotionListener(new MouseMotionListener()
         {
@@ -87,6 +82,9 @@ public class PaintFrame extends JFrame
                 if (pencilPressed)
                 {
                     canvas.drawFromMouse(event.getX(), event.getY());
+                } else if (linePressed)
+                {
+                    canvas.showLine(event.getPoint());
                 }
             }
 
@@ -99,8 +97,7 @@ public class PaintFrame extends JFrame
 
         canvas.addMouseListener(new MouseListener()
         {
-            private int startX;
-            private int startY;
+            private Point start;
 
             @Override
             public void mouseClicked(MouseEvent event)
@@ -113,8 +110,8 @@ public class PaintFrame extends JFrame
             {
                 if (linePressed)
                 {
-                    startX = event.getX();
-                    startY = event.getY();
+                    start = event.getPoint();
+                    canvas.setStartPoint(start);
                 } else if (pencilPressed)
                 {
                     canvas.setOldxy(event.getX(), event.getY());
@@ -127,7 +124,7 @@ public class PaintFrame extends JFrame
             {
                 if (linePressed)
                 {
-                    canvas.drawLine(startX, startY, event.getX(), event.getY());
+                    canvas.drawLine(start.x, start.y, event.getX(), event.getY());
                 }
             }
 

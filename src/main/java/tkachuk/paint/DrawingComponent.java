@@ -3,7 +3,6 @@ package tkachuk.paint;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 public class DrawingComponent extends JComponent
 {
@@ -12,6 +11,8 @@ public class DrawingComponent extends JComponent
             800, 650, BufferedImage.TYPE_INT_RGB);
     private int oldx;
     private int oldy;
+    Point startPoint;
+    Point endPoint;
 
     public DrawingComponent()
     {
@@ -34,11 +35,23 @@ public class DrawingComponent extends JComponent
         repaint();
     }
 
+    public Color getDrawColor()
+    {
+        return drawColor;
+    }
+
+    public void setStartPoint(Point point)
+    {
+        this.startPoint = point;
+        endPoint = startPoint;
+        repaint();
+    }
+
+
     @Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
         g.drawImage(image, 0, 0, null);
 
     }
@@ -62,6 +75,13 @@ public class DrawingComponent extends JComponent
         Graphics g = image.getGraphics();
         g.setColor(drawColor);
         g.drawLine(x1, y1, x2, y2);
+        repaint();
+
+    }
+
+    public void showLine(Point point)
+    {
+        endPoint = point;
         repaint();
     }
 }
