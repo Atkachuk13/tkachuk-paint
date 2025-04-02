@@ -64,7 +64,7 @@ public class PaintFrame extends JFrame
         {
             Color newColor = JColorChooser.showDialog(
                     PaintFrame.this,
-                    "Select color,",
+                    "Colors",
                     canvas.getDrawColor()
             );
 
@@ -103,7 +103,7 @@ public class PaintFrame extends JFrame
             public void mouseClicked(MouseEvent event)
             {
 
-            }
+            }h
 
             @Override
             public void mousePressed(MouseEvent event)

@@ -43,7 +43,7 @@ public class DrawingComponent extends JComponent
     public void setStartPoint(Point point)
     {
         this.startPoint = point;
-        endPoint = startPoint;
+        endPoint = point;
         repaint();
     }
 
@@ -53,6 +53,11 @@ public class DrawingComponent extends JComponent
     {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
+
+        if (startPoint != null && endPoint != null)
+        {
+            g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+        }
 
     }
 
