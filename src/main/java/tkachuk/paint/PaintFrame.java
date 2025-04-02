@@ -9,6 +9,7 @@ public class PaintFrame extends JFrame
     private final DrawingComponent canvas = new DrawingComponent();
     private boolean pencilPressed = false;
     private boolean linePressed = false;
+    private PencilTool pencilTool = new PencilTool();
 
     public PaintFrame()
     {
@@ -79,13 +80,18 @@ public class PaintFrame extends JFrame
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                if (pencilPressed)
-                {
-                    canvas.drawFromMouse(event.getX(), event.getY());
-                } else if (linePressed)
-                {
-                    canvas.showLine(event.getPoint());
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.dragged(g, event.getX(), event.getY());
+                canvas.repaint();
+
+//                if (pencilPressed)
+//                {
+//                    canvas.drawFromMouse(event.getX(), event.getY());
+//                } else if (linePressed)
+//                {
+//                    canvas.showLine(event.getPoint());
+//                }
             }
 
             @Override
@@ -108,24 +114,34 @@ public class PaintFrame extends JFrame
             @Override
             public void mousePressed(MouseEvent event)
             {
-                if (linePressed)
-                {
-                    start = event.getPoint();
-                    canvas.setStartPoint(start);
-                } else if (pencilPressed)
-                {
-                    canvas.setOldxy(event.getX(), event.getY());
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.pressed(g, event.getX(), event.getY());
+                canvas.repaint();
+
+//                if (linePressed)
+//                {
+//                    start = event.getPoint();
+//                    canvas.setStartPoint(start);
+//                } else if (pencilPressed)
+//                {
+//                    canvas.setOldxy(event.getX(), event.getY());
+//                }
 
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
-                if (linePressed)
-                {
-                    canvas.drawLine(start.x, start.y, event.getX(), event.getY());
-                }
+                Graphics g = canvas.getImage().getGraphics();
+                g.setColor(Color.BLACK);
+                pencilTool.released(g, event.getX(), event.getY());
+                canvas.repaint();
+
+//                if (linePressed)
+//                {
+//                    canvas.drawLine(start.x, start.y, event.getX(), event.getY());
+//                }
             }
 
             @Override

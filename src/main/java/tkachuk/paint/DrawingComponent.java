@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Draw the buffer image to the screen.
+ */
 public class DrawingComponent extends JComponent
 {
     private Color drawColor = Color.BLACK;
@@ -13,6 +16,7 @@ public class DrawingComponent extends JComponent
     private int oldy;
     Point startPoint;
     Point endPoint;
+    private PencilTool pencilTool = new PencilTool();
 
     public DrawingComponent()
     {
@@ -51,6 +55,7 @@ public class DrawingComponent extends JComponent
     @Override
     protected void paintComponent(Graphics g)
     {
+        PencilTool tool = new PencilTool();
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
 
@@ -61,17 +66,22 @@ public class DrawingComponent extends JComponent
 
     }
 
+    public BufferedImage getImage()
+    {
+        return image;
+    }
+
     public void drawFromMouse(int x, int y)
     {
         Graphics g = image.getGraphics();
         g.setColor(drawColor);
-        if (oldx != -1 && oldy != -1)
-        {
-            g.drawLine(oldx, oldy, x, y);
-        }
-        oldx = x;
-        oldy = y;
-
+        pencilTool.dragged(g, x, y);
+//        if (oldx != -1 && oldy != -1)
+//        {
+//            g.drawLine(oldx, oldy, x, y);
+//        }
+//        oldx = x;
+//        oldy = y;
         repaint();  // tells the operating system to recall the whole drawing component
     }
 
