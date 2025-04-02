@@ -9,7 +9,7 @@ public class PaintFrame extends JFrame
     private final DrawingComponent canvas = new DrawingComponent();
     private boolean pencilPressed = false;
     private boolean linePressed = false;
-    private PencilTool pencilTool = new PencilTool();
+    private Tool tool = new LineTool();
 
     public PaintFrame()
     {
@@ -49,6 +49,8 @@ public class PaintFrame extends JFrame
         add(canvas, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
 
+        canvas.setTool(tool);
+
         pencil.addActionListener(e ->
         {
             pencilPressed = true;
@@ -81,8 +83,8 @@ public class PaintFrame extends JFrame
             public void mouseDragged(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.dragged(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                tool.dragged(g, event.getX(), event.getY());
                 canvas.repaint();
 
 //                if (pencilPressed)
@@ -115,8 +117,8 @@ public class PaintFrame extends JFrame
             public void mousePressed(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.pressed(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                tool.pressed(g, event.getX(), event.getY());
                 canvas.repaint();
 
 //                if (linePressed)
@@ -134,8 +136,8 @@ public class PaintFrame extends JFrame
             public void mouseReleased(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.released(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                tool.released(g, event.getX(), event.getY());
                 canvas.repaint();
 
 //                if (linePressed)
@@ -165,3 +167,4 @@ public class PaintFrame extends JFrame
         frame.setVisible(true);
     }
 }
+

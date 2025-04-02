@@ -16,7 +16,7 @@ public class DrawingComponent extends JComponent
     private int oldy;
     Point startPoint;
     Point endPoint;
-    private PencilTool pencilTool = new PencilTool();
+    private Tool tool = new PencilTool();
 
     public DrawingComponent()
     {
@@ -55,7 +55,6 @@ public class DrawingComponent extends JComponent
     @Override
     protected void paintComponent(Graphics g)
     {
-        PencilTool tool = new PencilTool();
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
 
@@ -64,6 +63,8 @@ public class DrawingComponent extends JComponent
             g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         }
 
+        tool.preview(g);
+
     }
 
     public BufferedImage getImage()
@@ -71,11 +72,16 @@ public class DrawingComponent extends JComponent
         return image;
     }
 
+    public void setTool(Tool tool)
+    {
+        this.tool = tool;
+    }
+
     public void drawFromMouse(int x, int y)
     {
         Graphics g = image.getGraphics();
         g.setColor(drawColor);
-        pencilTool.dragged(g, x, y);
+        tool.dragged(g, x, y);
 //        if (oldx != -1 && oldy != -1)
 //        {
 //            g.drawLine(oldx, oldy, x, y);
