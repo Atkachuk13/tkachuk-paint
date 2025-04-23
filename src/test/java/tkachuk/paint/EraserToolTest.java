@@ -23,7 +23,8 @@ class EraserToolTest
         // then
         assertEquals(100, eraser.getX());
         assertEquals(200, eraser.getY());
-        verify(g).fillRect(100, 200, 10, 10);
+        verify(g).fillRect(100 - 10 / 2, 200 - 10 / 2, 10, 10);
+
     }
 
     @Test
@@ -36,7 +37,7 @@ class EraserToolTest
         eraser.dragged(g, 100, 200);
 
         // then
-        verify(g).fillRect(100, 200, 10, 10);
+        verify(g).fillRect(100 - 10 / 2, 200 - 10 / 2, 10, 10);
         assertEquals(100, eraser.getX());
         assertEquals(200, eraser.getY());
     }
@@ -53,7 +54,7 @@ class EraserToolTest
         // then
         assertEquals(100, eraser.getX());
         assertEquals(200, eraser.getY());
-        verify(g).fillRect(100, 200, 10, 10);
+        verify(g).fillRect(100 - 10 / 2, 200 - 10 / 2, 10, 10);
     }
 
     @Test
