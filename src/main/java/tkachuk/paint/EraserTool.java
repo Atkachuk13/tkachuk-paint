@@ -6,7 +6,7 @@ public class EraserTool implements Tool
 {
     private int x;
     private int y;
-    private final int eraserSize = 10;
+    private final int size = 10;
 
     public int getX()
     {
@@ -23,13 +23,13 @@ public class EraserTool implements Tool
     {
         this.x = x;
         this.y = y;
-        g.fillRect(x - eraserSize / 2, y - eraserSize / 2, eraserSize, eraserSize);
+        g.fillRect(x, y, size, size);
     }
 
     @Override
     public void dragged(Graphics g, int x, int y)
     {
-        g.fillRect(x - eraserSize / 2, y - eraserSize / 2, eraserSize, eraserSize);
+        g.fillRect(x, y, size, size);
         this.x = x;
         this.y = y;
     }
@@ -37,7 +37,7 @@ public class EraserTool implements Tool
     @Override
     public void preview(Graphics g)
     {
-        g.drawRect(x - eraserSize / 2, y - eraserSize / 2, eraserSize, eraserSize);
+        g.drawRect(x , y, size, size);
     }
 
     @Override

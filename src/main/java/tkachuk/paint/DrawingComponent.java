@@ -35,13 +35,6 @@ public class DrawingComponent extends JComponent
         return drawColor;
     }
 
-//    public void setStartPoint(Point point)
-//    {
-//        this.startPoint = point;
-//        endPoint = point;
-//        repaint();
-//    }
-
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -67,31 +60,4 @@ public class DrawingComponent extends JComponent
         this.tool = tool;
     }
 
-//    public void drawFromMouse(int x, int y)
-//    {
-//        Graphics g = image.getGraphics();
-//        g.setColor(drawColor);
-//        tool.dragged(g, x, y);
-////        if (oldx != -1 && oldy != -1)
-////        {
-////            g.drawLine(oldx, oldy, x, y);
-////        }
-////        oldx = x;
-////        oldy = y;
-//        repaint();  // tells the operating system to recall the whole drawing component
-//    }
-
-//    public void drawLine(int x1, int y1, int x2, int y2)
-//    {
-//        Graphics g = image.getGraphics();
-//        g.setColor(drawColor);
-//        g.drawLine(x1, y1, x2, y2);
-//        repaint();
-//    }
-//
-//    public void showLine(Point point)
-//    {
-//        endPoint = point;
-//        repaint();
-//    }
 }
