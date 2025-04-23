@@ -9,7 +9,8 @@ public class PaintFrame extends JFrame
     private final DrawingComponent canvas = new DrawingComponent();
     private boolean pencilPressed = false;
     private boolean linePressed = false;
-    private Tool tool = new LineTool();
+    private Tool lineTool = new LineTool();
+    private Tool pencilTool = new PencilTool();
 
     public PaintFrame()
     {
@@ -49,16 +50,18 @@ public class PaintFrame extends JFrame
         add(canvas, BorderLayout.CENTER);
         add(panel, BorderLayout.SOUTH);
 
-        canvas.setTool(tool);
-
         pencil.addActionListener(e ->
         {
+            canvas.setTool(pencilTool);
+
             pencilPressed = true;
             linePressed = false;
         });
 
         line.addActionListener(e ->
         {
+            canvas.setTool(lineTool);
+
             pencilPressed = false;
             linePressed = true;
         });
@@ -82,18 +85,19 @@ public class PaintFrame extends JFrame
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
-                g.setColor(canvas.getDrawColor());
-                tool.dragged(g, event.getX(), event.getY());
-                canvas.repaint();
-
-//                if (pencilPressed)
-//                {
-//                    canvas.drawFromMouse(event.getX(), event.getY());
-//                } else if (linePressed)
-//                {
-//                    canvas.showLine(event.getPoint());
-//                }
+                if (pencilPressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(canvas.getDrawColor());
+                    pencilTool.dragged(g, event.getX(), event.getY());
+                    canvas.repaint();
+                } else if (linePressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(canvas.getDrawColor());
+                    lineTool.dragged(g, event.getX(), event.getY());
+                    canvas.repaint();
+                }
             }
 
             @Override
@@ -116,34 +120,34 @@ public class PaintFrame extends JFrame
             @Override
             public void mousePressed(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
-                g.setColor(canvas.getDrawColor());
-                tool.pressed(g, event.getX(), event.getY());
-                canvas.repaint();
 
-//                if (linePressed)
-//                {
-//                    start = event.getPoint();
-//                    canvas.setStartPoint(start);
-//                } else if (pencilPressed)
-//                {
-//                    canvas.setOldxy(event.getX(), event.getY());
-//                }
+                if (linePressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(canvas.getDrawColor());
+                    lineTool.pressed(g, event.getX(), event.getY());
+                    canvas.repaint();
+                } else if (pencilPressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(canvas.getDrawColor());
+                    pencilTool.pressed(g, event.getX(), event.getY());
+                    canvas.repaint();
+                }
 
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
-                g.setColor(canvas.getDrawColor());
-                tool.released(g, event.getX(), event.getY());
-                canvas.repaint();
 
-//                if (linePressed)
-//                {
-//                    canvas.drawLine(start.x, start.y, event.getX(), event.getY());
-//                }
+                if (linePressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(canvas.getDrawColor());
+                    lineTool.released(g, event.getX(), event.getY());
+                    canvas.repaint();
+                }
             }
 
             @Override
