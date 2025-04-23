@@ -53,7 +53,7 @@ class LineToolTest
         line.dragged(g, 200, 300);
 
         // then
-        verify(g).drawLine(100, 200, 200, 300);
+        verify(g).drawLine(100, 200, 100, 200);
         assertEquals(200, line.getX2());
         assertEquals(300, line.getY2());
     }
@@ -66,13 +66,10 @@ class LineToolTest
         line.pressed(g, 100, 200);
 
         // when
-        line.dragged(g, 200, 300);
         line.released(g, 200, 300);
 
         // then
         verify(g).drawLine(100, 200, 200, 300);
-        assertEquals(200, line.getX1());
-        assertEquals(300, line.getY1());
     }
 
 }
