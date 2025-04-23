@@ -9,8 +9,10 @@ public class PaintFrame extends JFrame
     private final DrawingComponent canvas = new DrawingComponent();
     private boolean pencilPressed = false;
     private boolean linePressed = false;
+    private boolean eraserPressed = false;
     private Tool lineTool = new LineTool();
     private Tool pencilTool = new PencilTool();
+    private Tool eraserTool = new EraserTool();
 
     public PaintFrame()
     {
@@ -35,9 +37,11 @@ public class PaintFrame extends JFrame
         // buttons panel 1
         JButton pencil = new JButton("Pencil");
         JButton line = new JButton("|");
+        JButton eraser = new JButton("Eraser");
 
         sub1.add(pencil);
         sub1.add(line);
+        sub1.add(eraser);
 
         // colors panel 2
         JButton colorButton = new JButton("Colors");
@@ -56,6 +60,7 @@ public class PaintFrame extends JFrame
 
             pencilPressed = true;
             linePressed = false;
+            eraserPressed = false;
         });
 
         line.addActionListener(e ->
@@ -64,6 +69,16 @@ public class PaintFrame extends JFrame
 
             pencilPressed = false;
             linePressed = true;
+            eraserPressed = false;
+        });
+
+        eraser.addActionListener(e ->
+        {
+            canvas.setTool(eraserTool);
+
+            pencilPressed = false;
+            linePressed = false;
+            eraserPressed = true;
         });
 
         colorButton.addActionListener(e ->
@@ -96,6 +111,12 @@ public class PaintFrame extends JFrame
                     Graphics g = canvas.getImage().getGraphics();
                     g.setColor(canvas.getDrawColor());
                     lineTool.dragged(g, event.getX(), event.getY());
+                    canvas.repaint();
+                } else if (eraserPressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(Color.WHITE);
+                    eraserTool.dragged(g, event.getX(), event.getY());
                     canvas.repaint();
                 }
             }
@@ -132,6 +153,12 @@ public class PaintFrame extends JFrame
                     Graphics g = canvas.getImage().getGraphics();
                     g.setColor(canvas.getDrawColor());
                     pencilTool.pressed(g, event.getX(), event.getY());
+                    canvas.repaint();
+                } else if (eraserPressed)
+                {
+                    Graphics g = canvas.getImage().getGraphics();
+                    g.setColor(Color.WHITE);
+                    eraserTool.pressed(g, event.getX(), event.getY());
                     canvas.repaint();
                 }
 
