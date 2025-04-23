@@ -16,6 +16,11 @@ public class DrawingComponent extends JComponent
     Point endPoint;
     private Tool tool = new PencilTool();
 
+    public Tool getTool()
+    {
+        return tool;
+    }
+
     public DrawingComponent()
     {
         // set the image to all white
