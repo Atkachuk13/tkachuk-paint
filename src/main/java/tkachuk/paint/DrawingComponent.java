@@ -12,11 +12,19 @@ public class DrawingComponent extends JComponent
     private Color drawColor = Color.BLACK;
     private final BufferedImage image = new BufferedImage(
             800, 650, BufferedImage.TYPE_INT_RGB);
-    private int oldx;
-    private int oldy;
     Point startPoint;
     Point endPoint;
-    private PencilTool pencilTool = new PencilTool();
+    private Tool tool = new PencilTool();
+
+    public Tool getTool()
+    {
+        return tool;
+    }
+
+    public void setTool(Tool tool)
+    {
+        this.tool = tool;
+    }
 
     public DrawingComponent()
     {
@@ -24,13 +32,6 @@ public class DrawingComponent extends JComponent
         Graphics g = image.getGraphics();
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
-    }
-
-    public void setOldxy(int oldx, int oldy)
-    {
-        this.oldx = oldx;
-        this.oldy = oldy;
-        repaint();
     }
 
     public void setDrawColor(Color drawColor)
@@ -44,18 +45,9 @@ public class DrawingComponent extends JComponent
         return drawColor;
     }
 
-    public void setStartPoint(Point point)
-    {
-        this.startPoint = point;
-        endPoint = point;
-        repaint();
-    }
-
-
     @Override
     protected void paintComponent(Graphics g)
     {
-        PencilTool tool = new PencilTool();
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
 
@@ -64,6 +56,7 @@ public class DrawingComponent extends JComponent
             g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         }
 
+        tool.preview(g);
     }
 
     public BufferedImage getImage()
@@ -71,32 +64,4 @@ public class DrawingComponent extends JComponent
         return image;
     }
 
-    public void drawFromMouse(int x, int y)
-    {
-        Graphics g = image.getGraphics();
-        g.setColor(drawColor);
-        pencilTool.dragged(g, x, y);
-//        if (oldx != -1 && oldy != -1)
-//        {
-//            g.drawLine(oldx, oldy, x, y);
-//        }
-//        oldx = x;
-//        oldy = y;
-        repaint();  // tells the operating system to recall the whole drawing component
-    }
-
-    public void drawLine(int x1, int y1, int x2, int y2)
-    {
-        Graphics g = image.getGraphics();
-        g.setColor(drawColor);
-        g.drawLine(x1, y1, x2, y2);
-        repaint();
-
-    }
-
-    public void showLine(Point point)
-    {
-        endPoint = point;
-        repaint();
-    }
 }

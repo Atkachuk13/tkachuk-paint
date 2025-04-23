@@ -7,9 +7,9 @@ import java.awt.event.*;
 public class PaintFrame extends JFrame
 {
     private final DrawingComponent canvas = new DrawingComponent();
-    private boolean pencilPressed = false;
-    private boolean linePressed = false;
-    private PencilTool pencilTool = new PencilTool();
+    private Tool lineTool = new LineTool();
+    private Tool pencilTool = new PencilTool();
+    private Tool eraserTool = new EraserTool();
 
     public PaintFrame()
     {
@@ -34,9 +34,11 @@ public class PaintFrame extends JFrame
         // buttons panel 1
         JButton pencil = new JButton("Pencil");
         JButton line = new JButton("|");
+        JButton eraser = new JButton("Eraser");
 
         sub1.add(pencil);
         sub1.add(line);
+        sub1.add(eraser);
 
         // colors panel 2
         JButton colorButton = new JButton("Colors");
@@ -51,14 +53,17 @@ public class PaintFrame extends JFrame
 
         pencil.addActionListener(e ->
         {
-            pencilPressed = true;
-            linePressed = false;
+            canvas.setTool(pencilTool);
         });
 
         line.addActionListener(e ->
         {
-            pencilPressed = false;
-            linePressed = true;
+            canvas.setTool(lineTool);
+        });
+
+        eraser.addActionListener(e ->
+        {
+            canvas.setTool(eraserTool);
         });
 
         colorButton.addActionListener(e ->
@@ -81,17 +86,9 @@ public class PaintFrame extends JFrame
             public void mouseDragged(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.dragged(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                canvas.getTool().dragged(g, event.getX(), event.getY());
                 canvas.repaint();
-
-//                if (pencilPressed)
-//                {
-//                    canvas.drawFromMouse(event.getX(), event.getY());
-//                } else if (linePressed)
-//                {
-//                    canvas.showLine(event.getPoint());
-//                }
             }
 
             @Override
@@ -103,8 +100,6 @@ public class PaintFrame extends JFrame
 
         canvas.addMouseListener(new MouseListener()
         {
-            private Point start;
-
             @Override
             public void mouseClicked(MouseEvent event)
             {
@@ -115,33 +110,18 @@ public class PaintFrame extends JFrame
             public void mousePressed(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.pressed(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                canvas.getTool().pressed(g, event.getX(), event.getY());
                 canvas.repaint();
-
-//                if (linePressed)
-//                {
-//                    start = event.getPoint();
-//                    canvas.setStartPoint(start);
-//                } else if (pencilPressed)
-//                {
-//                    canvas.setOldxy(event.getX(), event.getY());
-//                }
-
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
                 Graphics g = canvas.getImage().getGraphics();
-                g.setColor(Color.BLACK);
-                pencilTool.released(g, event.getX(), event.getY());
+                g.setColor(canvas.getDrawColor());
+                canvas.getTool().released(g, event.getX(), event.getY());
                 canvas.repaint();
-
-//                if (linePressed)
-//                {
-//                    canvas.drawLine(start.x, start.y, event.getX(), event.getY());
-//                }
             }
 
             @Override
@@ -165,3 +145,4 @@ public class PaintFrame extends JFrame
         frame.setVisible(true);
     }
 }
+

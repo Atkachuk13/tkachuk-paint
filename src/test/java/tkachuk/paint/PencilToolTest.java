@@ -35,7 +35,7 @@ class PencilToolTest
         tool.pressed(g, 50, 100);
 
         // when
-        tool.dragged(g, 200,150);
+        tool.dragged(g, 200, 150);
 
         // then
         verify(g).drawLine(50, 100, 200, 150);

@@ -1,12 +1,12 @@
 package tkachuk.paint;
 
-import javax.swing.plaf.basic.BasicToolBarSeparatorUI;
 import java.awt.*;
 
-public class PencilTool implements Tool
+public class EraserTool implements Tool
 {
     private int x;
     private int y;
+    private final int size = 10;
 
     public int getX()
     {
@@ -23,13 +23,15 @@ public class PencilTool implements Tool
     {
         this.x = x;
         this.y = y;
-        g.drawLine(x, y, x, y);
+        g.setColor(Color.WHITE);
+        g.fillRect(x - size / 2, y - size / 2, size, size);
     }
 
     @Override
     public void dragged(Graphics g, int x, int y)
     {
-        g.drawLine(this.x, this.y, x, y);
+        g.setColor(Color.WHITE);
+        g.fillRect(x - size / 2, y - size / 2, size, size);
         this.x = x;
         this.y = y;
     }
@@ -37,7 +39,8 @@ public class PencilTool implements Tool
     @Override
     public void preview(Graphics g)
     {
-
+        g.setColor(Color.WHITE);
+        g.drawRect(x - size / 2, y - size / 2, size, size);
     }
 
     @Override
