@@ -100,8 +100,6 @@ public class PaintFrame extends JFrame
 
         canvas.addMouseListener(new MouseListener()
         {
-            private Point start;
-
             @Override
             public void mouseClicked(MouseEvent event)
             {

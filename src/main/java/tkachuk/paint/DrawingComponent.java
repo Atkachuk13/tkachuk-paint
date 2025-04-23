@@ -21,6 +21,11 @@ public class DrawingComponent extends JComponent
         return tool;
     }
 
+    public void setTool(Tool tool)
+    {
+        this.tool = tool;
+    }
+
     public DrawingComponent()
     {
         // set the image to all white
@@ -52,17 +57,11 @@ public class DrawingComponent extends JComponent
         }
 
         tool.preview(g);
-
     }
 
     public BufferedImage getImage()
     {
         return image;
-    }
-
-    public void setTool(Tool tool)
-    {
-        this.tool = tool;
     }
 
 }
