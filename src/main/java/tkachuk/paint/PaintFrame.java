@@ -3,6 +3,7 @@ package tkachuk.paint;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 public class PaintFrame extends JFrame
 {
@@ -85,7 +86,7 @@ public class PaintFrame extends JFrame
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
                 canvas.getTool().dragged(g, event.getX(), event.getY());
                 canvas.repaint();
@@ -109,16 +110,17 @@ public class PaintFrame extends JFrame
             @Override
             public void mousePressed(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                BufferedImage image = canvas.getImage();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
-                canvas.getTool().pressed(g, event.getX(), event.getY());
+                canvas.getTool().pressed(image, g, event.getX(), event.getY());
                 canvas.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
                 canvas.getTool().released(g, event.getX(), event.getY());
                 canvas.repaint();

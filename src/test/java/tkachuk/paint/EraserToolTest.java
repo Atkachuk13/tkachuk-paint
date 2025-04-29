@@ -3,13 +3,15 @@ package tkachuk.paint;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EraserToolTest
 {
-    private Graphics g = mock();
+    private Graphics2D g = mock();
+    private BufferedImage image = mock();
 
     @Test
     void pressed()
@@ -18,7 +20,7 @@ class EraserToolTest
         EraserTool eraser = new EraserTool();
 
         // when
-        eraser.pressed(g, 100, 200);
+        eraser.pressed(image, g, 100, 200);
 
         // then
         assertEquals(100, eraser.getX());

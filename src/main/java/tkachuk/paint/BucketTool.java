@@ -3,35 +3,24 @@ package tkachuk.paint;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class PencilTool implements Tool
+public class BucketTool implements Tool
 {
     private int x;
     private int y;
-
-    public int getX()
-    {
-        return x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
+    private Color color;
 
     @Override
     public void pressed(BufferedImage image, Graphics2D g, int x, int y)
     {
-        this.x = x;
-        this.y = y;
-        g.drawLine(x, y, x, y);
+       this.x = x;
+       this.y = y;
+       //get color at x and y where just pressed
     }
 
     @Override
     public void dragged(Graphics2D g, int x, int y)
     {
-        g.drawLine(this.x, this.y, x, y);
-        this.x = x;
-        this.y = y;
+
     }
 
     @Override
@@ -43,6 +32,8 @@ public class PencilTool implements Tool
     @Override
     public void released(Graphics2D g, int x, int y)
     {
-
+        // when released change the color to a new color
+        // recursively check the surounding pizels, and if its the same color as the one you originally found then you
+        //fill them in (continue untill hit a diff color)
     }
 }

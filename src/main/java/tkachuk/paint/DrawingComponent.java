@@ -29,7 +29,7 @@ public class DrawingComponent extends JComponent
     public DrawingComponent()
     {
         // set the image to all white
-        Graphics g = image.getGraphics();
+        Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
     }
@@ -49,6 +49,8 @@ public class DrawingComponent extends JComponent
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
         g.drawImage(image, 0, 0, null);
 
         if (startPoint != null && endPoint != null)
@@ -56,7 +58,7 @@ public class DrawingComponent extends JComponent
             g.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
         }
 
-        tool.preview(g);
+        tool.preview(g2);
     }
 
     public BufferedImage getImage()
