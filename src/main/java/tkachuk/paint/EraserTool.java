@@ -29,7 +29,7 @@ public class EraserTool implements Tool
         this.y = y;
         g.setColor(Color.WHITE);
         g.setStroke(stroke);
-        g.fillRect(x - size / 2, y - size / 2, size, size);
+        g.drawLine(x, y, x, y);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class EraserTool implements Tool
     {
         g.setColor(Color.WHITE);
         g.setStroke(stroke);
-        g.fillRect(x - size / 2, y - size / 2, size, size);
+        g.drawLine(this.x, this.y ,x ,y);
         this.x = x;
         this.y = y;
     }
@@ -45,7 +45,6 @@ public class EraserTool implements Tool
     @Override
     public void preview(Graphics2D g)
     {
-        g.setColor(Color.WHITE);
         g.setStroke(stroke);
         g.drawRect(x - size / 2, y - size / 2, size, size);
     }
