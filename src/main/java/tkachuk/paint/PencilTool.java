@@ -41,7 +41,7 @@ public class PencilTool implements Tool
     }
 
     @Override
-    public void released(Graphics2D g, int x, int y)
+    public void released(BufferedImage image, Graphics2D g, int x, int y)
     {
 
     }

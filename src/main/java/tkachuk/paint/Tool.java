@@ -17,6 +17,6 @@ public interface Tool
      */
     void preview(Graphics2D g);
 
-    void released(Graphics2D g, int x, int y);
+    void released(BufferedImage image, Graphics2D g, int x, int y);
 
 }

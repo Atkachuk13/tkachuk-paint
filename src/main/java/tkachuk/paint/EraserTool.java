@@ -9,8 +9,7 @@ public class EraserTool implements Tool
 {
     private int x;
     private int y;
-    private final int size = 10;
-    Stroke stroke = new BasicStroke(10);
+    private Stroke stroke = new BasicStroke(10);
 
     public int getX()
     {
@@ -46,11 +45,11 @@ public class EraserTool implements Tool
     public void preview(Graphics2D g)
     {
         g.setStroke(stroke);
-        g.drawRect(x - size / 2, y - size / 2, size, size);
+        g.drawRect(x - 10 / 2, y - 10 / 2, 10, 10);
     }
 
     @Override
-    public void released(Graphics2D g, int x, int y)
+    public void released(BufferedImage image, Graphics2D g, int x, int y)
     {
 
     }
