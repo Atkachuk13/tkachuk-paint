@@ -13,9 +13,9 @@ public class BucketTool implements Tool
     @Override
     public void pressed(BufferedImage image, Graphics2D g, int x, int y)
     {
-       this.x = x;
-       this.y = y;
-       //get color at x and y where just pressed
+        this.x = x;
+        this.y = y;
+        //get color at x and y where just pressed
         newColor = g.getColor();
         currColor = new Color(image.getRGB(x, y));
     }
@@ -38,18 +38,27 @@ public class BucketTool implements Tool
         // when released change the color to a new color
         /* recursively check the surrounding pixels, and if it's the same color as the one you originally found then you
         fill them in (continue until hit a diff color)*/
-        if(currColor.equals(newColor)) return;
+        if (currColor.equals(newColor))
+        {
+            return;
+        }
 
         fill(image, x, y, currColor, newColor);
     }
 
     private void fill(BufferedImage image, int x, int y, Color tColor, Color rColor)
     {
-        if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight()) return;
+        if (x < 0 || y < 0 || x >= image.getWidth() || y >= image.getHeight())
+        {
+            return;
+        }
 
         Color currentColor = new Color(image.getRGB(x, y));
 
-        if (!currentColor.equals(tColor) || currentColor.equals(rColor)) return;
+        if (!currentColor.equals(tColor) || currentColor.equals(rColor))
+        {
+            return;
+        }
 
         image.setRGB(x, y, rColor.getRGB());
 
