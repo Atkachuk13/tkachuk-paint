@@ -68,7 +68,7 @@ class LineToolTest
         line.pressed(image, g, 100, 200);
 
         // when
-        line.released(g, 200, 300);
+        line.released(image, g, 200, 300);
 
         // then
         verify(g).drawLine(100, 200, 200, 300);

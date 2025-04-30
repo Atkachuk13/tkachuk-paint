@@ -31,7 +31,13 @@ public class EraserTool implements Tool
         g.drawLine(x, y, x, y);
     }
 
+    public Stroke getStroke()
+    {
+        return stroke;
+    }
+
     @Override
+
     public void dragged(Graphics2D g, int x, int y)
     {
         g.setColor(Color.WHITE);

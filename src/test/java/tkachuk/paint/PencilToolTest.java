@@ -52,7 +52,7 @@ class PencilToolTest
         PencilTool tool = new PencilTool();
 
         // when
-        tool.released(g, 100, 200);
+        tool.released(image, g, 100, 200);
 
         // then
         verifyNoMoreInteractions(g);
