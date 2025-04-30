@@ -1,12 +1,15 @@
 package tkachuk.paint;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
+
+// setStroke
 public class EraserTool implements Tool
 {
     private int x;
     private int y;
-    private final int size = 10;
+    private Stroke stroke = new BasicStroke(10);
 
     public int getX()
     {
@@ -19,32 +22,40 @@ public class EraserTool implements Tool
     }
 
     @Override
-    public void pressed(Graphics g, int x, int y)
+    public void pressed(BufferedImage image, Graphics2D g, int x, int y)
     {
         this.x = x;
         this.y = y;
         g.setColor(Color.WHITE);
-        g.fillRect(x - size / 2, y - size / 2, size, size);
+        g.setStroke(stroke);
+        g.drawLine(x, y, x, y);
+    }
+
+    public Stroke getStroke()
+    {
+        return stroke;
     }
 
     @Override
-    public void dragged(Graphics g, int x, int y)
+
+    public void dragged(Graphics2D g, int x, int y)
     {
         g.setColor(Color.WHITE);
-        g.fillRect(x - size / 2, y - size / 2, size, size);
+        g.setStroke(stroke);
+        g.drawLine(this.x, this.y ,x ,y);
         this.x = x;
         this.y = y;
     }
 
     @Override
-    public void preview(Graphics g)
+    public void preview(Graphics2D g)
     {
-        g.setColor(Color.WHITE);
-        g.drawRect(x - size / 2, y - size / 2, size, size);
+        g.setStroke(stroke);
+        g.drawRect(x - 10 / 2, y - 10 / 2, 10, 10);
     }
 
     @Override
-    public void released(Graphics g, int x, int y)
+    public void released(BufferedImage image, Graphics2D g, int x, int y)
     {
 
     }

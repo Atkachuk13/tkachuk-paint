@@ -3,13 +3,15 @@ package tkachuk.paint;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class LineToolTest
 {
-    private Graphics g = mock();
+    private Graphics2D g = mock();
+    private BufferedImage image = mock();
 
     @Test
     void pressed()
@@ -18,7 +20,7 @@ class LineToolTest
         LineTool line = new LineTool();
 
         // when
-        line.pressed(g, 100, 200);
+        line.pressed(image, g, 100, 200);
 
         // then
         assertEquals(100, line.getX1());
@@ -31,7 +33,7 @@ class LineToolTest
     {
         // given
         LineTool line = new LineTool();
-        line.pressed(g, 100, 200);
+        line.pressed(image, g, 100, 200);
 
         // when
         line.dragged(g, 150, 300);
@@ -47,7 +49,7 @@ class LineToolTest
     {
         // given
         LineTool line = new LineTool();
-        line.pressed(g, 100, 200);
+        line.pressed(image, g, 100, 200);
 
         // when
         line.dragged(g, 200, 300);
@@ -63,10 +65,10 @@ class LineToolTest
     {
         // given
         LineTool line = new LineTool();
-        line.pressed(g, 100, 200);
+        line.pressed(image, g, 100, 200);
 
         // when
-        line.released(g, 200, 300);
+        line.released(image, g, 200, 300);
 
         // then
         verify(g).drawLine(100, 200, 200, 300);

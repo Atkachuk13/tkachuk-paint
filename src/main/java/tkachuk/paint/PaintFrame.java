@@ -3,6 +3,7 @@ package tkachuk.paint;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 public class PaintFrame extends JFrame
 {
@@ -10,6 +11,7 @@ public class PaintFrame extends JFrame
     private Tool lineTool = new LineTool();
     private Tool pencilTool = new PencilTool();
     private Tool eraserTool = new EraserTool();
+    private Tool bucketTool = new BucketTool();
 
     public PaintFrame()
     {
@@ -33,12 +35,14 @@ public class PaintFrame extends JFrame
 
         // buttons panel 1
         JButton pencil = new JButton("Pencil");
-        JButton line = new JButton("|");
+        JButton line = new JButton("Line");
         JButton eraser = new JButton("Eraser");
+        JButton bucket = new JButton("Bucket");
 
         sub1.add(pencil);
         sub1.add(line);
         sub1.add(eraser);
+        sub1.add(bucket);
 
         // colors panel 2
         JButton colorButton = new JButton("Colors");
@@ -66,6 +70,11 @@ public class PaintFrame extends JFrame
             canvas.setTool(eraserTool);
         });
 
+        bucket.addActionListener(e ->
+        {
+            canvas.setTool(bucketTool);
+        });
+
         colorButton.addActionListener(e ->
         {
             Color newColor = JColorChooser.showDialog(
@@ -85,7 +94,7 @@ public class PaintFrame extends JFrame
             @Override
             public void mouseDragged(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
                 canvas.getTool().dragged(g, event.getX(), event.getY());
                 canvas.repaint();
@@ -109,18 +118,20 @@ public class PaintFrame extends JFrame
             @Override
             public void mousePressed(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                BufferedImage image = canvas.getImage();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
-                canvas.getTool().pressed(g, event.getX(), event.getY());
+                canvas.getTool().pressed(image, g, event.getX(), event.getY());
                 canvas.repaint();
             }
 
             @Override
             public void mouseReleased(MouseEvent event)
             {
-                Graphics g = canvas.getImage().getGraphics();
+                BufferedImage image = canvas.getImage();
+                Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
                 g.setColor(canvas.getDrawColor());
-                canvas.getTool().released(g, event.getX(), event.getY());
+                canvas.getTool().released(image, g, event.getX(), event.getY());
                 canvas.repaint();
             }
 
